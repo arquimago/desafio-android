@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Star Wars Wiki</string>
+    <string name="search_menu">Buscar</string>
+    <string name="search_hint">Nome do Personagem</string>
 </resources>
