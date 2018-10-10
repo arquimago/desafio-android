@@ -4,11 +4,12 @@ import br.com.popcode.starwarswiki.Constants
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-public class Swapi {
+class Swapi {
 
-    val retrofit = Retrofit.Builder()
+    val service = Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+            .create(SwQueries::class.java)
 
 }
