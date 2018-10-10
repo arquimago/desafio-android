@@ -3,13 +3,13 @@
     <string name="search_menu">Buscar</string>
     <string name="search_hint">Nome do Personagem</string>
     <string name="fav">Favoritos</string>
-    <string name="height">Altura: </string>
-    <string name="mass">Massa: </string>
-    <string name="hair_color">Cabelo: </string>
-    <string name="skin_color">Pele: </string>
-    <string name="eye_color">Olhos: </string>
-    <string name="birth_year">Ano de Nascimento: </string>
-    <string name="gender">Gênero: </string>
-    <string name="planet">Planeta: </string>
-    <string name="species">Espécie: </string>
+    <string name="height">Height: </string>
+    <string name="mass">Mass: </string>
+    <string name="hair_color">Hair Color: </string>
+    <string name="skin_color">Skin Color: </string>
+    <string name="eye_color">Eyes color: </string>
+    <string name="birth_year">Birth Year: </string>
+    <string name="gender">Gender: </string>
+    <string name="planet">Planet: </string>
+    <string name="species">Specie: </string>
 </resources>

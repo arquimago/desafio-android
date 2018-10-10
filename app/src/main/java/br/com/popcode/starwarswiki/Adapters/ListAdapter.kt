@@ -21,22 +21,32 @@ class ListAdapter(private val list: MutableList<Character>) : RecyclerView.Adapt
 
     override fun onBindViewHolder(holder: CharHolder, position: Int) {
         val character = list[position]
+
+        val height = if(character.height!="unknown") "${character.height}cm" else character.height
+        val mass = if(character.mass!="unknown") "${character.mass}kg" else character.height
+
         holder.name.text = character.name
-        holder.height.text = character.height
+        holder.height.text = height
         holder.gender.text = character.gender
-        holder.mass.text = character.mass
+        holder.mass.text = mass
 
         if (character.favorite) holder.fav.setImageResource(R.drawable.ic_star_gold_24dp)
 
         holder.view.setOnClickListener {
-            Hawk.put("character", character)
             val characterActivity = Intent(it.context, CharacterActivity::class.java)
+            Hawk.put("character", character)
             it.context.startActivity(characterActivity)
         }
 
         holder.fav.setOnClickListener {
-            if (character.favorite) holder.fav.setImageResource(R.drawable.ic_star_gold_24dp) else holder.fav.setImageResource(R.drawable.ic_star_border_gold_24dp)
-            //TODO alterar favorito no BD e API...
+            character.favorite = !character.favorite
+            if (character.favorite) {
+                holder.fav.setImageResource(R.drawable.ic_star_border_gold_24dp)
+            } else {
+                holder.fav.setImageResource(R.drawable.ic_star_gold_24dp)
+                //TODO alterar favorito no BD e API...
+            }
+            notifyDataSetChanged()
         }
     }
 

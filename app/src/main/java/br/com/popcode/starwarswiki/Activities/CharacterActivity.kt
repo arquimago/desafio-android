@@ -1,8 +1,13 @@
 package br.com.popcode.starwarswiki.Activities
 
+import android.media.Image
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import br.com.popcode.starwarswiki.Api.Sw
 import br.com.popcode.starwarswiki.Models.Character
+import br.com.popcode.starwarswiki.Models.Planet
+import br.com.popcode.starwarswiki.Models.Species
 import br.com.popcode.starwarswiki.R
 import com.orhanobut.hawk.Hawk
 import kotlinx.android.synthetic.main.activity_character.*
@@ -15,18 +20,63 @@ class CharacterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_character)
 
-        tv_name.text = character.name
-        tv_height.text = character.height
-        tv_mass.text = character.mass
-        tv_hair_color.text = character.hairColor
-        tv_skin_color.text = character.skinColor
-        tv_eye_color.text = character.eyeColor
-        tv_birth_year.text = character.birthYear
-        tv_gender.text = character.gender
-        //TODO buscar planeta
-        //tv_planet.text = character.homeworld
-        //TODO buscar espécie
-        //tv_species.text = character.species
+        if (character.favorite) fav_star.setImageResource(R.drawable.ic_star_gold_24dp)
 
+        val height =  if(character.height!="unknown") "${getString(R.string.height)} ${character.height}cm" else "unknown"
+        val mass = if(character.mass!="unknown") "${getString(R.string.mass)} ${character.mass}kg" else "unknown"
+        val hairColor = "${getString(R.string.hair_color)} ${character.hairColor}"
+        val skinColor = "${getString(R.string.skin_color)} ${character.skinColor}"
+        val eyeColor = "${getString(R.string.eye_color)} ${character.eyeColor}"
+        val birthYear = "${getString(R.string.birth_year)} ${character.birthYear}"
+        val gender = "${getString(R.string.gender)} ${character.gender}"
+
+        tv_name.text = character.name
+        tv_height.text = height
+        tv_mass.text = mass
+        tv_hair_color.text = hairColor
+        tv_skin_color.text = skinColor
+        tv_eye_color.text = eyeColor
+        tv_birth_year.text = birthYear
+        tv_gender.text = gender
+        Sw().getPlanet(character.homeworld!!, PlanetListener())
+        Sw().getSpecies(character.species!![0], SpeciesListener())
+
+        back_arrow.setOnClickListener{
+            Hawk.delete("character")
+            onBackPressed()
+        }
+
+        fav_star.setOnClickListener {
+            character.favorite = !character.favorite
+            if (character.favorite) {
+                fav_star.setImageResource(R.drawable.ic_star_border_gold_24dp)
+            } else {
+                fav_star.setImageResource(R.drawable.ic_star_gold_24dp)
+                //TODO alterar favorito no BD e API...
+            }
+        }
+
+    }
+
+    inner class PlanetListener : Sw.PlanetListener {
+        override fun onFailure(t: Throwable) {
+            tv_planet.text = "Falha ao carregar nome do Planeta"
+        }
+
+        override fun onResponse(planet: Planet) {
+            val planet_name = "${getString(R.string.planet)} ${planet.name}"
+            tv_planet.text = planet_name
+        }
+    }
+
+    inner class SpeciesListener: Sw.SpeciesListener{
+        override fun onFailure(t: Throwable) {
+            tv_species.text = "Falha ao carregar nome da Espécie"
+        }
+
+        override fun onResponse(species: Species) {
+            val species_name = "${getString(R.string.species)} ${species.name}"
+            tv_species.text = species_name
+        }
     }
 }

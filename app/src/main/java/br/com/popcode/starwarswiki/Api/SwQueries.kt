@@ -14,14 +14,11 @@ public interface SwQueries{
     fun getAllPeople(@Query("page") page: Int): Call<MutableList<Character>>
 
     @GET("people/{id}/")
-    fun getPeople(@Path("id") peopleId: Int,
-                  callback: Callback<Character>)
+    fun getPeople(@Path("id") peopleId: Int): Call<Character>
 
     @GET("species/{id}/")
-    fun getSpecies(@Path("id") speciesId: Int,
-                   callback: Callback<Species>)
+    fun getSpecies(@Path("id") speciesId: Int) : Call<Species>
 
     @GET("planets/{id}/")
-    fun getPlanet(@Path("id") planetId: Int,
-                  callback: Callback<Planet>)
+    fun getPlanet(@Path("id") planetId: Int) : Call<Planet>
 }
