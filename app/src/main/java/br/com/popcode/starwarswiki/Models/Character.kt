@@ -6,7 +6,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 @Entity
-class CharacterModel(@PrimaryKey var id: Int) {
+class Character(@PrimaryKey var id: Int) {
 
     @SerializedName("name")
     @Expose
