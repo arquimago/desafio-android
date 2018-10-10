@@ -2,4 +2,14 @@
     <string name="app_name">Star Wars Wiki</string>
     <string name="search_menu">Buscar</string>
     <string name="search_hint">Nome do Personagem</string>
+    <string name="fav">Favoritos</string>
+    <string name="height">Altura: </string>
+    <string name="mass">Massa: </string>
+    <string name="hair_color">Cabelo: </string>
+    <string name="skin_color">Pele: </string>
+    <string name="eye_color">Olhos: </string>
+    <string name="birth_year">Ano de Nascimento: </string>
+    <string name="gender">Gênero: </string>
+    <string name="planet">Planeta: </string>
+    <string name="species">Espécie: </string>
 </resources>
