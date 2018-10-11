@@ -44,15 +44,19 @@ class ListAdapter(private val list: MutableList<Character>) : RecyclerView.Adapt
             it.context.startActivity(characterActivity)
         }
 
-        holder.fav.setOnClickListener {
-            character.favorite = !character.favorite
-            if (character.favorite) {
-                holder.fav.setImageResource(R.drawable.ic_star_border_gold_24dp)
-            } else {
-                holder.fav.setImageResource(R.drawable.ic_star_gold_24dp)
-                //TODO alterar favorito no BD e API...
+        with(holder.view){
+
+            this.item_fav_star.setOnClickListener {
+                if (character.favorite) {
+                    it.item_fav_star.setImageResource(R.drawable.ic_star_border_gold_24dp)
+                    character.favorite = false
+                } else {
+                    it.item_fav_star.setImageResource(R.drawable.ic_star_gold_24dp)
+                    character.favorite = true
+                    //TODO alterar favorito no BD e API...
+                }
+                //notifyDataSetChanged()
             }
-            notifyDataSetChanged()
         }
     }
 

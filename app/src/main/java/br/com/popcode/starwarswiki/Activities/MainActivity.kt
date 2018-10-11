@@ -31,6 +31,12 @@ class MainActivity : AppCompatActivity() {
         rv_list.adapter = ListAdapter(list)
 
         Sw().getPeople(PeopleListener(list))
+
+        fav_star.setOnClickListener{
+            list.sortWith(compareBy{ it.favorite })
+            list.reverse()
+            rv_list.adapter.notifyDataSetChanged()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
