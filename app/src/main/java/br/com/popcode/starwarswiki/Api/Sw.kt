@@ -13,8 +13,8 @@ class Sw {
 
     val service = Swapi().service
 
-    fun getPeople(listener: PeopleListener) {
-        val request = service.getAllPeople(1)
+    fun getPeople(page: Int, listener: PeopleListener) {
+        val request = service.getAllPeople(page)
         request.enqueue(object : retrofit2.Callback<AllPeople> {
             override fun onFailure(call: Call<AllPeople>, t: Throwable) {
                 t.stackTrace.forEach {
@@ -24,9 +24,8 @@ class Sw {
             }
 
             override fun onResponse(call: Call<AllPeople>, response: Response<AllPeople>) {
-                Log.e(Constants.TAG, response.errorBody().toString())
                 if (response.isSuccessful) {
-                    listener.onResponse(response.body()!!.results)
+                    listener.onResponse(response.body()?.next, response.body()!!.results)
                 }
             }
 
@@ -34,7 +33,7 @@ class Sw {
     }
 
     interface PeopleListener {
-        fun onResponse(char: MutableList<Character>)
+        fun onResponse(next: String?, chars: MutableList<Character>)
         fun onFailure(t: Throwable)
     }
 
