@@ -28,9 +28,10 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="e4b300" />
-                            <entry key="outputName" value="ic_arrow_back_gold_24dp" />
-                            <entry key="sourceFile" value="C:\Users\thale" />
+                            <entry key="outputName" value="ic_gender_hermaphrodite" />
+                            <entry key="sourceFile" value="E:\Downloads\gender (2).svg" />
                           </map>
                         </option>
                       </PersistentState>

@@ -23,7 +23,7 @@
             android:id="@+id/header_title"
             android:layout_width="160dp"
             android:layout_height="50dp"
-            android:layout_gravity="center"
+            android:layout_gravity="start"
             android:contentDescription="@string/app_name"
             android:src="@drawable/logo_nav"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -31,17 +31,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
+        <Button
             android:id="@+id/fav_star"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="83dp"
+            android:layout_height="26dp"
             android:layout_gravity="end"
-            android:contentDescription="@string/fav"
-            android:src="@drawable/ic_star_border_gold_24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:layout_editor_absoluteY="16dp" />
+            android:background="@drawable/background_card"
+            android:text="@string/fav"
+            android:textColor="@color/gold"
+            android:textSize="14sp"
+            tools:layout_editor_absoluteX="176dp"
+            tools:layout_editor_absoluteY="15dp" />
 
     </android.support.v7.widget.Toolbar>
+
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_list"

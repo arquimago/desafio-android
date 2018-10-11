@@ -22,13 +22,19 @@ class ListAdapter(private val list: MutableList<Character>) : RecyclerView.Adapt
     override fun onBindViewHolder(holder: CharHolder, position: Int) {
         val character = list[position]
 
-        val height = if(character.height!="unknown") "${character.height}cm" else character.height
-        val mass = if(character.mass!="unknown") "${character.mass}kg" else character.height
+        val height = if(character.height!="unknown") "${character.height}cm" else "n/a"
+        val mass = if(character.mass!="unknown") " ${character.mass}kg" else " n/a"
 
         holder.name.text = character.name
         holder.height.text = height
-        holder.gender.text = character.gender
         holder.mass.text = mass
+
+        when(character.gender){
+            "female" -> holder.gender.setImageResource(R.drawable.ic_gender_female)
+            "male" -> holder.gender.setImageResource(R.drawable.ic_gender_male)
+            "hermaphrodite" -> holder.gender.setImageResource(R.drawable.ic_gender_hermaphrodite)
+            else -> holder.gender.setImageResource(R.drawable.ic_gender_none)
+        }
 
         if (character.favorite) holder.fav.setImageResource(R.drawable.ic_star_gold_24dp)
 

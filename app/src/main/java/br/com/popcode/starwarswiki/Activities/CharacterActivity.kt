@@ -1,9 +1,7 @@
 package br.com.popcode.starwarswiki.Activities
 
-import android.media.Image
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import android.support.v7.app.AppCompatActivity
 import br.com.popcode.starwarswiki.Api.Sw
 import br.com.popcode.starwarswiki.Models.Character
 import br.com.popcode.starwarswiki.Models.Planet
@@ -22,8 +20,8 @@ class CharacterActivity : AppCompatActivity() {
 
         if (character.favorite) fav_star.setImageResource(R.drawable.ic_star_gold_24dp)
 
-        val height =  if(character.height!="unknown") "${getString(R.string.height)} ${character.height}cm" else "unknown"
-        val mass = if(character.mass!="unknown") "${getString(R.string.mass)} ${character.mass}kg" else "unknown"
+        val height = if (character.height != "unknown") "${getString(R.string.height)} ${character.height}cm" else "${getString(R.string.height)} unknown"
+        val mass = if (character.mass != "unknown") "${getString(R.string.mass)} ${character.mass}kg" else "${getString(R.string.mass)} unknown"
         val hairColor = "${getString(R.string.hair_color)} ${character.hairColor}"
         val skinColor = "${getString(R.string.skin_color)} ${character.skinColor}"
         val eyeColor = "${getString(R.string.eye_color)} ${character.eyeColor}"
@@ -41,7 +39,7 @@ class CharacterActivity : AppCompatActivity() {
         Sw().getPlanet(character.homeworld!!, PlanetListener())
         Sw().getSpecies(character.species!![0], SpeciesListener())
 
-        back_arrow.setOnClickListener{
+        back_arrow.setOnClickListener {
             Hawk.delete("character")
             onBackPressed()
         }
@@ -69,7 +67,7 @@ class CharacterActivity : AppCompatActivity() {
         }
     }
 
-    inner class SpeciesListener: Sw.SpeciesListener{
+    inner class SpeciesListener : Sw.SpeciesListener {
         override fun onFailure(t: Throwable) {
             tv_species.text = "Falha ao carregar nome da Espécie"
         }
