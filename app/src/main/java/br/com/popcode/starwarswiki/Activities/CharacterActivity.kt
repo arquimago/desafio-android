@@ -1,11 +1,11 @@
-package br.com.popcode.starwarswiki.Activities
+package br.com.popcode.starwarswiki.activities
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import br.com.popcode.starwarswiki.Api.Sw
-import br.com.popcode.starwarswiki.Models.Character
-import br.com.popcode.starwarswiki.Models.Planet
-import br.com.popcode.starwarswiki.Models.Species
+import br.com.popcode.starwarswiki.api.Sw
+import br.com.popcode.starwarswiki.models.Character
+import br.com.popcode.starwarswiki.models.Planet
+import br.com.popcode.starwarswiki.models.Species
 import br.com.popcode.starwarswiki.R
 import com.orhanobut.hawk.Hawk
 import kotlinx.android.synthetic.main.activity_character.*

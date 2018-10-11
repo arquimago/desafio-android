@@ -1,8 +1,11 @@
-package br.com.popcode.starwarswiki.Api
+package br.com.popcode.starwarswiki.api
 
-import br.com.popcode.starwarswiki.Models.Character
-import br.com.popcode.starwarswiki.Models.Planet
-import br.com.popcode.starwarswiki.Models.Species
+import android.util.Log
+import br.com.popcode.starwarswiki.Constants
+import br.com.popcode.starwarswiki.models.AllPeople
+import br.com.popcode.starwarswiki.models.Character
+import br.com.popcode.starwarswiki.models.Planet
+import br.com.popcode.starwarswiki.models.Species
 import retrofit2.Call
 import retrofit2.Response
 
@@ -11,25 +14,27 @@ class Sw {
     val service = Swapi().service
 
     fun getPeople(listener: PeopleListener) {
-        for (i in 1..87) {
-            val request = service.getPeople(i)
-            request.enqueue(object : retrofit2.Callback<Character> {
-                override fun onFailure(call: Call<Character>, t: Throwable) {
-                    listener.onFailure(t)
+        val request = service.getAllPeople(1)
+        request.enqueue(object : retrofit2.Callback<AllPeople> {
+            override fun onFailure(call: Call<AllPeople>, t: Throwable) {
+                t.stackTrace.forEach {
+                    Log.e(Constants.TAG, it.toString())
                 }
+                listener.onFailure(t)
+            }
 
-                override fun onResponse(call: Call<Character>, response: Response<Character>) {
-                    if (response.isSuccessful) {
-                        listener.onResponse(response.body()!!)
-                    }
+            override fun onResponse(call: Call<AllPeople>, response: Response<AllPeople>) {
+                Log.e(Constants.TAG, response.errorBody().toString())
+                if (response.isSuccessful) {
+                    listener.onResponse(response.body()!!.results)
                 }
+            }
 
-            })
-        }
+        })
     }
 
     interface PeopleListener {
-        fun onResponse(char: Character)
+        fun onResponse(char: MutableList<Character>)
         fun onFailure(t: Throwable)
     }
 

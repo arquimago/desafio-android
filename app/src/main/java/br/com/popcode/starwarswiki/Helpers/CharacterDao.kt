@@ -1,7 +1,7 @@
-package br.com.popcode.starwarswiki.Helpers
+package br.com.popcode.starwarswiki.helpers
 
 import android.arch.persistence.room.*
-import br.com.popcode.starwarswiki.Models.Character
+import br.com.popcode.starwarswiki.models.Character
 
 @Dao
 interface CharacterDao{

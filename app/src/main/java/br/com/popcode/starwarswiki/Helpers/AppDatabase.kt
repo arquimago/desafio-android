@@ -1,11 +1,13 @@
-package br.com.popcode.starwarswiki.Helpers
+package br.com.popcode.starwarswiki.helpers
 
 import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.Database
-import br.com.popcode.starwarswiki.Models.Character
+import android.arch.persistence.room.TypeConverters
+import br.com.popcode.starwarswiki.models.Character
 
 
-@Database(entities = arrayOf(Character::class), version = 1)
+@Database(entities = [Character::class], version = 1)
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun characterDao(): CharacterDao
 

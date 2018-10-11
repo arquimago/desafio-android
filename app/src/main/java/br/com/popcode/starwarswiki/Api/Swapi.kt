@@ -1,4 +1,4 @@
-package br.com.popcode.starwarswiki.Api
+package br.com.popcode.starwarswiki.api
 
 import br.com.popcode.starwarswiki.Constants
 import retrofit2.Retrofit

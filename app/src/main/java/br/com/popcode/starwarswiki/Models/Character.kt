@@ -1,7 +1,10 @@
-package br.com.popcode.starwarswiki.Models
+package br.com.popcode.starwarswiki.models
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
+import android.arch.persistence.room.TypeConverter
+import android.arch.persistence.room.TypeConverters
+import br.com.popcode.starwarswiki.helpers.Converters
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -38,16 +41,16 @@ class Character(@PrimaryKey (autoGenerate = true)
     var homeworld: String? = null
     @SerializedName("films")
     @Expose
-    var films: List<String>? = null
+    var films: ArrayList<String>? = null
     @SerializedName("species")
     @Expose
-    var species: List<String>? = null
+    var species: ArrayList<String>? = null
     @SerializedName("vehicles")
     @Expose
-    var vehicles: List<String>? = null
+    var vehicles: ArrayList<String>? = null
     @SerializedName("starships")
     @Expose
-    var starships: List<String>? = null
+    var starships: ArrayList<String>? = null
     @SerializedName("created")
     @Expose
     var created: String? = null

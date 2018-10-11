@@ -1,12 +1,12 @@
-package br.com.popcode.starwarswiki.Adapters
+package br.com.popcode.starwarswiki.adapters
 
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import br.com.popcode.starwarswiki.Activities.CharacterActivity
-import br.com.popcode.starwarswiki.Models.Character
+import br.com.popcode.starwarswiki.activities.CharacterActivity
+import br.com.popcode.starwarswiki.models.Character
 import br.com.popcode.starwarswiki.R
 import com.orhanobut.hawk.Hawk
 import kotlinx.android.synthetic.main.item_character.view.*

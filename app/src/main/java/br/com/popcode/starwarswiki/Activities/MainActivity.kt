@@ -1,4 +1,4 @@
-package br.com.popcode.starwarswiki.Activities
+package br.com.popcode.starwarswiki.activities
 
 import android.app.SearchManager
 import android.arch.persistence.room.Room
@@ -9,11 +9,12 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.widget.SearchView
 import android.widget.Toast
-import br.com.popcode.starwarswiki.Adapters.ListAdapter
-import br.com.popcode.starwarswiki.Api.Sw
+import br.com.popcode.starwarswiki.adapters.ListAdapter
+import br.com.popcode.starwarswiki.api.Sw
 import br.com.popcode.starwarswiki.Constants
-import br.com.popcode.starwarswiki.Helpers.AppDatabase
-import br.com.popcode.starwarswiki.Models.Character
+import br.com.popcode.starwarswiki.helpers.AppDatabase
+import br.com.popcode.starwarswiki.helpers.CharacterDao
+import br.com.popcode.starwarswiki.models.Character
 import br.com.popcode.starwarswiki.R
 import com.orhanobut.hawk.Hawk
 import kotlinx.android.synthetic.main.activity_main.*
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity() {
 
         val list: MutableList<Character> = arrayListOf()
         rv_list.adapter = ListAdapter(list)
+
 
         Sw().getPeople(PeopleListener(list))
 
@@ -80,8 +82,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     inner class PeopleListener(var list: MutableList<Character>) : Sw.PeopleListener{
-        override fun onResponse(char: Character) {
-            list.add(char)
+        override fun onResponse(chars: MutableList<Character>) {
+            list.addAll(chars)
             rv_list.adapter.notifyDataSetChanged()
         }
 
