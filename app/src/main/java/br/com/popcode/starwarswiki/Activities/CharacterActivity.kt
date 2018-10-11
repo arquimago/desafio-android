@@ -18,7 +18,7 @@ class CharacterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_character)
 
-        if (character.favorite) fav_star.setImageResource(R.drawable.ic_star_gold_24dp)
+        if (character.favorite) fav_button.setImageResource(R.drawable.ic_star_gold_24dp)
 
         val height = if (character.height != "unknown") "${getString(R.string.height)} ${character.height}cm" else "${getString(R.string.height)} unknown"
         val mass = if (character.mass != "unknown") "${getString(R.string.mass)} ${character.mass}kg" else "${getString(R.string.mass)} unknown"
@@ -44,12 +44,12 @@ class CharacterActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        fav_star.setOnClickListener {
+        fav_button.setOnClickListener {
             character.favorite = !character.favorite
             if (character.favorite) {
-                fav_star.setImageResource(R.drawable.ic_star_border_gold_24dp)
+                fav_button.setImageResource(R.drawable.ic_star_border_gold_24dp)
             } else {
-                fav_star.setImageResource(R.drawable.ic_star_gold_24dp)
+                fav_button.setImageResource(R.drawable.ic_star_gold_24dp)
                 //TODO alterar favorito no BD e API...
             }
         }

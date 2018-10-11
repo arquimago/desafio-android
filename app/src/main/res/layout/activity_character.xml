@@ -31,7 +31,7 @@
         app:srcCompat="@drawable/ic_arrow_back_gold_24dp" />
 
     <ImageView
-        android:id="@+id/fav_star"
+        android:id="@+id/fav_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -49,7 +49,7 @@
         android:layout_marginEnd="8dp"
         android:text="Jar Jar Binks"
         android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/fav_star"
+        app:layout_constraintEnd_toStartOf="@+id/fav_button"
         app:layout_constraintStart_toEndOf="@+id/back_arrow"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -1,6 +1,7 @@
 package br.com.popcode.starwarswiki.Activities
 
 import android.app.SearchManager
+import android.arch.persistence.room.Room
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -10,6 +11,8 @@ import android.widget.SearchView
 import android.widget.Toast
 import br.com.popcode.starwarswiki.Adapters.ListAdapter
 import br.com.popcode.starwarswiki.Api.Sw
+import br.com.popcode.starwarswiki.Constants
+import br.com.popcode.starwarswiki.Helpers.AppDatabase
 import br.com.popcode.starwarswiki.Models.Character
 import br.com.popcode.starwarswiki.R
 import com.orhanobut.hawk.Hawk
@@ -22,6 +25,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         Hawk.init(this).build()
 
+        val db = Room.databaseBuilder(
+                this,
+                AppDatabase::class.java,
+                Constants.DB)
+                .allowMainThreadQueries()
+                .build()
+
+        val characterDao = db.characterDao()
+
         my_toolbar.title = ""
         setSupportActionBar(my_toolbar)
 
@@ -32,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
         Sw().getPeople(PeopleListener(list))
 
-        fav_star.setOnClickListener{
+        fav_button.setOnClickListener{
             list.sortWith(compareBy{ it.favorite })
             list.reverse()
             rv_list.adapter.notifyDataSetChanged()
