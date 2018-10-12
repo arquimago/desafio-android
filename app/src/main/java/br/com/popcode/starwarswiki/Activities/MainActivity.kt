@@ -88,7 +88,12 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                //do nothing
+
+                if(newText == ""){
+                    val qList = dao.getAll()
+                    rv_list.adapter = ListAdapter(qList, this@MainActivity)
+                    rv_list.adapter.notifyDataSetChanged()
+                }
 
                 return true
             }
