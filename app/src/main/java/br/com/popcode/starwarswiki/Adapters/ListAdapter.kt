@@ -1,17 +1,19 @@
 package br.com.popcode.starwarswiki.adapters
 
+import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import br.com.popcode.starwarswiki.activities.CharacterActivity
-import br.com.popcode.starwarswiki.models.Character
 import br.com.popcode.starwarswiki.R
+import br.com.popcode.starwarswiki.activities.CharacterActivity
+import br.com.popcode.starwarswiki.api.FavFunctions
+import br.com.popcode.starwarswiki.models.Character
 import com.orhanobut.hawk.Hawk
 import kotlinx.android.synthetic.main.item_character.view.*
 
-class ListAdapter(private val list: MutableList<Character>) : RecyclerView.Adapter<ListAdapter.CharHolder>() {
+class ListAdapter(private val list: MutableList<Character>, private val context: Context) : RecyclerView.Adapter<ListAdapter.CharHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharHolder {
@@ -22,14 +24,14 @@ class ListAdapter(private val list: MutableList<Character>) : RecyclerView.Adapt
     override fun onBindViewHolder(holder: CharHolder, position: Int) {
         val character = list[position]
 
-        val height = if(character.height!="unknown") "${character.height}cm" else "n/a"
-        val mass = if(character.mass!="unknown") " ${character.mass}kg" else " n/a"
+        val height = if (character.height != "unknown") "${character.height}cm" else "n/a"
+        val mass = if (character.mass != "unknown") " ${character.mass}kg" else " n/a"
 
         holder.name.text = character.name
         holder.height.text = height
         holder.mass.text = mass
 
-        when(character.gender){
+        when (character.gender) {
             "female" -> holder.gender.setImageResource(R.drawable.ic_gender_female)
             "male" -> holder.gender.setImageResource(R.drawable.ic_gender_male)
             "hermaphrodite" -> holder.gender.setImageResource(R.drawable.ic_gender_hermaphrodite)
@@ -44,7 +46,7 @@ class ListAdapter(private val list: MutableList<Character>) : RecyclerView.Adapt
             it.context.startActivity(characterActivity)
         }
 
-        with(holder.view){
+        with(holder.view) {
 
             this.item_fav_star.setOnClickListener {
                 if (character.favorite) {
@@ -53,9 +55,8 @@ class ListAdapter(private val list: MutableList<Character>) : RecyclerView.Adapt
                 } else {
                     it.item_fav_star.setImageResource(R.drawable.ic_star_gold_24dp)
                     character.favorite = true
-                    //TODO alterar favorito no BD e API...
                 }
-                //notifyDataSetChanged()
+                FavFunctions(context).favoriteChar(character.favorite, character.name!!)
             }
         }
     }

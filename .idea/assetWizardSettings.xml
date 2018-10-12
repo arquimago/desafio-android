@@ -46,7 +46,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="scalingPercent" value="45" />
+                                                <entry key="scalingPercent" value="47" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -59,7 +59,7 @@
                                       <entry key="backgroundAssetType" value="COLOR" />
                                       <entry key="backgroundColor" value="e4b300" />
                                       <entry key="backgroundImage" value="E:\Documents\GitHub\desafio-android\app\src\main\res\drawable\logo_nav.png" />
-                                      <entry key="foregroundImage" value="E:\Downloads\cinema.svg" />
+                                      <entry key="foregroundImage" value="C:\Users\thale\Desktop\714225_cinema_512x512.png" />
                                     </map>
                                   </option>
                                 </PersistentState>

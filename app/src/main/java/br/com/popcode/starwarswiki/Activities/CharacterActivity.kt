@@ -2,11 +2,12 @@ package br.com.popcode.starwarswiki.activities
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import br.com.popcode.starwarswiki.R
+import br.com.popcode.starwarswiki.api.FavFunctions
 import br.com.popcode.starwarswiki.api.Sw
 import br.com.popcode.starwarswiki.models.Character
 import br.com.popcode.starwarswiki.models.Planet
 import br.com.popcode.starwarswiki.models.Species
-import br.com.popcode.starwarswiki.R
 import com.orhanobut.hawk.Hawk
 import kotlinx.android.synthetic.main.activity_character.*
 
@@ -50,8 +51,8 @@ class CharacterActivity : AppCompatActivity() {
                 fav_button.setImageResource(R.drawable.ic_star_border_gold_24dp)
             } else {
                 fav_button.setImageResource(R.drawable.ic_star_gold_24dp)
-                //TODO alterar favorito no BD e API...
             }
+            FavFunctions(this).favoriteChar(character.favorite, character.name!!)
         }
 
     }
