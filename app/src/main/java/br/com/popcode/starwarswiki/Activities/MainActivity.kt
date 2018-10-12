@@ -5,16 +5,15 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.widget.SearchView
 import android.widget.Toast
 import br.com.popcode.starwarswiki.R
 import br.com.popcode.starwarswiki.adapters.ListAdapter
+import br.com.popcode.starwarswiki.api.FavFunctions
 import br.com.popcode.starwarswiki.api.Sw
 import br.com.popcode.starwarswiki.helpers.CharacterDao
 import br.com.popcode.starwarswiki.helpers.DB
-import br.com.popcode.starwarswiki.helpers.EndlessRecyclerViewScrollListener
 import br.com.popcode.starwarswiki.models.Character
 import com.orhanobut.hawk.Hawk
 import kotlinx.android.synthetic.main.activity_main.*
@@ -29,6 +28,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Hawk.init(this).build()
+        if(Hawk.contains("fav_failed")){
+            FavFunctions(this).favoriteChar(Hawk.get("fav_failed"),Hawk.get("name_failed"))
+            Hawk.delete("fav_failed")
+            Hawk.delete("name_failed")
+        }
 
         val characterDao = DB(this).characterDao
 
@@ -45,13 +49,14 @@ class MainActivity : AppCompatActivity() {
 
         Sw().getPeople(1, PeopleListener(characterDao, list))
 
-        rv_list.addOnScrollListener(OnScrollListener(linearLayoutManager, characterDao, list))
-
         fav_button.setOnClickListener {
-            list.clear()
-            list.addAll(characterDao.getFavs())
-            rv_list.adapter.notifyDataSetChanged()
+            filterFavorites(characterDao)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        rv_list.adapter.notifyDataSetChanged()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -60,19 +65,30 @@ class MainActivity : AppCompatActivity() {
 
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchView = menu!!.findItem(R.id.search).actionView as SearchView
+
+        var dao = DB(this).characterDao
+
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
         searchView.queryHint = getString(R.string.search_hint)
 
         searchView.isSubmitButtonEnabled = true
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+                if(query != null) {
+
+                    val text = "%$query%"
+
+                    val qList = dao.searchByName(text)
+                    rv_list.adapter = ListAdapter(qList, this@MainActivity)
+                    rv_list.adapter.notifyDataSetChanged()
+                }
 
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                //do nothing
 
                 return true
             }
@@ -98,6 +114,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
+            if(hasNextPage){
+                Sw().getPeople(pageCount, PeopleListener(dao, list))
+                pageCount++
+            } else {
+                Toast.makeText(this@MainActivity,"Lista Completa", Toast.LENGTH_SHORT).show()
+            }
+
         }
 
         override fun onFailure(t: Throwable) {
@@ -109,23 +132,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun filterFavorites(list: MutableList<Character>, dao: CharacterDao){
-        list.clear()
+    private fun filterFavorites(dao: CharacterDao){
 
-        list.addAll(if(favFiltered) dao.getFavs() else dao.getAll())
+        val favlist : MutableList<Character> = if(favFiltered) dao.getFavs(true) else dao.getAll()
+
+        fav_button.text = if(favFiltered) "TODOS" else "FAVORITOS"
+
+        rv_list.adapter = ListAdapter(favlist, this@MainActivity)
+
+        favFiltered = !favFiltered
 
         rv_list.adapter.notifyDataSetChanged()
         hasNextPage = false
     }
-
-    inner class OnScrollListener(linearLayoutManager: LinearLayoutManager, var characterDao: CharacterDao, var list: MutableList<Character>) : EndlessRecyclerViewScrollListener(linearLayoutManager) {
-        override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
-            if (hasNextPage) {
-                Sw().getPeople(pageCount, PeopleListener(characterDao, list))
-                pageCount++
-            }
-        }
-    }
-
 
 }

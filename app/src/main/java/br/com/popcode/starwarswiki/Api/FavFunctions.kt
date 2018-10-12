@@ -8,6 +8,7 @@ import br.com.popcode.starwarswiki.helpers.DB
 import br.com.popcode.starwarswiki.models.FavFail
 import br.com.popcode.starwarswiki.models.FavSuccess
 import com.google.gson.GsonBuilder
+import com.orhanobut.hawk.Hawk
 import retrofit2.Call
 import retrofit2.Response
 import java.security.SecureRandom
@@ -31,7 +32,8 @@ class FavFunctions(val context: Context) {
 
         request.enqueue(object : retrofit2.Callback<FavSuccess> {
             override fun onFailure(call: Call<FavSuccess>, t: Throwable) {
-                Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
+                Hawk.put("fav_failed", b)
+                Hawk.put("name_failed", name)
             }
 
             override fun onResponse(call: Call<FavSuccess>, response: Response<FavSuccess>) {
@@ -43,6 +45,9 @@ class FavFunctions(val context: Context) {
                     response.body()!!.message!!
                 } else {
                     val favFail = gson.fromJson(response.errorBody()!!.string(), FavFail::class.java)
+
+                    Hawk.put("fav_failed", b)
+                    Hawk.put("name_failed", name)
 
                     favFail.errorMessage!!
                 }

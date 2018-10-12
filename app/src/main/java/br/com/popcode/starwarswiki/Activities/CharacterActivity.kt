@@ -10,6 +10,7 @@ import br.com.popcode.starwarswiki.models.Planet
 import br.com.popcode.starwarswiki.models.Species
 import com.orhanobut.hawk.Hawk
 import kotlinx.android.synthetic.main.activity_character.*
+import kotlinx.android.synthetic.main.activity_character.view.*
 
 class CharacterActivity : AppCompatActivity() {
 
@@ -46,11 +47,12 @@ class CharacterActivity : AppCompatActivity() {
         }
 
         fav_button.setOnClickListener {
-            character.favorite = !character.favorite
             if (character.favorite) {
-                fav_button.setImageResource(R.drawable.ic_star_border_gold_24dp)
+                it.fav_button.setImageResource(R.drawable.ic_star_border_gold_24dp)
+                character.favorite = false
             } else {
-                fav_button.setImageResource(R.drawable.ic_star_gold_24dp)
+                it.fav_button.setImageResource(R.drawable.ic_star_gold_24dp)
+                character.favorite = true
             }
             FavFunctions(this).favoriteChar(character.favorite, character.name!!)
         }
